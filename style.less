@@ -1,0 +1,191 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+
+body {
+    background-color: @color1 !important;
+    color: #141414;
+    width: 100%;
+}
+
+.navbar {
+    -webkit-backdrop-filter: blur(60px) !important;
+    backdrop-filter: blur(60px) !important;
+    background-blend-mode: overlay;
+    background-color: rgba(19, 41, 61, 1) !important;
+    color: @color1 !important;
+    font-size: 13px;
+
+    a {
+        color: white !important;
+    }
+
+    button {
+        background-color: white;
+    }
+}
+
+section {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    .post-info {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        margin: 3rem 2rem;
+        text-align: center;
+        width: 80%;
+
+        header {
+            margin-bottom: 1rem;
+
+            p {
+                margin: 0;
+            }
+        }
+
+        .art-description {
+            margin-top: 1rem;
+            width: 45vw;
+        }
+
+        .display-2 {
+            font-weight: bold !important;
+        }
+
+        p {
+            font-size: 14px;
+        }
+
+        h1 {
+            font-weight: 600;
+        }
+    }
+
+    .img-container {
+        margin: 0rem 2rem !important;
+
+        img {
+            border: 2px solid black;
+        }
+
+        p {
+            align-self: center;
+            color: darkgray;
+            font-size: 0.813rem;
+            font-style: italic;
+            padding-top: 1rem;
+        }
+    }
+
+    .profile {
+        width: @width2;
+    }
+
+    .art-content {
+        width: @width2;
+
+        p.art-text {
+            font-family: serif !important;
+            font-size: 21px;
+            letter-spacing: 130%;
+            line-height: 2.2rem;
+            margin-top: 1.5rem;
+            text-align: justify;
+        }
+    }
+
+    .art-actions {
+        width: 20vw;
+
+        i {
+            cursor: pointer;
+            font-size: 3rem;
+        }
+    }
+
+    .author-name {
+        font-size: 1.2rem;
+        font-weight: bold;
+    }
+
+    .followers {
+        font-size: 13px;
+    }
+}
+
+section .art-content h1, section .art-content h2, section .art-content h3, section .art-content h4, section .art-content h5, section .art-content h6 {
+    color: @color0 !important;
+    font-weight: bold !important;
+    margin-top: 2rem;
+}
+
+.follow {
+    background-color: @color0;
+    border: 0;
+    border: 2px solid @color0;
+    color: white;
+    padding: 1em 4em;
+    transition: 0.3s ease;
+
+    &:hover {
+        background-color: @color2;
+        border: 2px solid @color0;
+        color: @color0;
+    }
+}
+
+button {
+    border-radius: 5px !important;
+}
+
+footer {
+    background-color: @color0;
+    border: 0;
+    color: darkgray;
+}
+
+.socials {
+    i {
+        cursor: pointer;
+        font-size: 3rem;
+        transition: 0.3s ease;
+
+        &:hover {
+            color: @color2;
+        }
+    }
+}
+
+.info {
+    a {
+        color: gray;
+        font-size: 13px;
+        text-decoration: none;
+    }
+
+    p {
+        color: gray;
+        font-size: 13px;
+        text-decoration: none;
+    }
+}
+
+@media (max-width: 960px) {
+    section h1 {
+        width: 90% !important;
+    }
+}
+
+@media (max-width: 1000px) {
+
+    .art-actions {
+        width: 60vw !important;
+    }
+
+    .art-description {
+        width: 75vw !important;
+    }
+
+}

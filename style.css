@@ -1,0 +1,171 @@
+@import "https://fonts.googleapis.com/css2?family=Inter&display=swap";
+* {
+    font-family: "Inter", sans-serif;
+}
+body {
+    width: 100%;
+    background-color: #fdfdfd !important;
+    color: #141414;
+}
+.navbar {
+    background-color: #13293d !important;
+    backdrop-filter: blur(60px) !important;
+    color: #fdfdfd !important;
+    background-blend-mode: overlay;
+    -webkit-backdrop-filter: blur(60px) !important;
+    font-size: 13px;
+}
+.navbar a {
+    color: #fff !important;
+}
+.navbar button {
+    background-color: #fff;
+}
+section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+section .post-info {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    text-align: center;
+    margin: 3rem 2rem;
+    width: 80%;
+}
+section .post-info header {
+    margin-bottom: 1rem;
+}
+section .post-info header p {
+    margin: 0;
+}
+section .post-info .art-description {
+    margin-top: 1rem;
+    width: 45vw;
+}
+section .post-info .display-2 {
+    font-weight: bold !important;
+}
+section .post-info p {
+    font-size: 14px;
+}
+section .post-info h1 {
+    font-weight: 600;
+}
+section .img-container {
+    margin: 0rem 2rem !important;
+}
+section .img-container img {
+    border: 2px solid #000;
+}
+section .img-container p {
+    color: #a9a9a9;
+    align-self: center;
+    font-size: 0.813rem;
+    padding-top: 1rem;
+    font-style: italic;
+}
+section .profile {
+    width: 80vw;
+}
+section .art-content {
+    width: 80vw;
+}
+section .art-content p.art-text {
+    margin-top: 1.5rem;
+    font-size: 21px;
+    font-family: serif !important;
+    text-align: justify;
+    letter-spacing: 130%;
+    line-height: 2.2rem;
+}
+section .art-content h1,
+section .art-content h2,
+section .art-content h3,
+section .art-content h4,
+section .art-content h5,
+section .art-content h6 {
+    margin-top: 2rem;
+    font-weight: bold !important;
+    color: #13293d !important;
+}
+section .art-actions {
+    width: 20vw;
+}
+section .art-actions i {
+    font-size: 3rem;
+    cursor: pointer;
+}
+section .author-name {
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+section .followers {
+    font-size: 13px;
+}
+.follow {
+    background-color: #13293d;
+    color: #fff;
+    border: 0;
+    padding: 1em 4em;
+    border: 2px solid #13293d;
+    transition: 0.3s ease;
+}
+.follow:hover {
+    background-color: #ceff1a;
+    color: #13293d;
+    border: 2px solid #13293d;
+}
+button {
+    border-radius: 5px !important;
+}
+footer {
+    background-color: #13293d;
+    color: #a9a9a9;
+    border: 0;
+}
+.socials i {
+    font-size: 3rem;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+.socials i:hover {
+    color: #ceff1a;
+}
+.d-none {
+    display: none !important;
+}
+.avatar > img {
+    width: 4rem !important;
+    border-radius: 50px !important;
+    border: 2px solid #FFF;
+}
+#logout {
+    background-color: white;
+    color: red;
+    border: 0;
+    padding: 1em 2em;
+    border: 2px solid #13293d;
+    transition: 0.3s ease;
+}
+.info a,
+.info p {
+    text-decoration: none;
+    color: gray;
+    font-size: 13px;
+}
+@media (max-width: 960px) {
+    section h1 {
+        width: 90% !important;
+    }
+    .art-description {
+        width: 75vw !important;
+    }
+}
+@media (max-width: 1000px) {
+    .art-actions {
+        width: 60vw !important;
+    }
+}

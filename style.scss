@@ -1,0 +1,208 @@
+// @import "node_modules/bootstrap/scss/bootstrap.scss"; import de bootstrap
+@import "./scss/_variables.scss"; // import de mis variables
+
+@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap"); // Inter font import
+
+* {
+    font-family: "Inter", sans-serif;
+}
+
+body {
+    width: 100%;
+    background-color: $white-color !important;
+    color: $black-color;
+}
+
+/*Estilos para navbar*/
+.navbar {
+    background-color: $navbar-bg !important;
+    backdrop-filter: $blur-bg-filter;
+    color: $white-color !important;
+    background-blend-mode: overlay;
+
+    a {
+        color: white !important;
+    }
+
+    button {
+        background-color: white;
+    }
+
+    /* para safari */
+    -webkit-backdrop-filter: $blur-bg-filter;
+    font-size: $navbar-font-size;
+}
+
+section {
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .post-info {
+        display: flex;
+        justify-content: space-around;
+        flex-direction: column;
+        text-align: center;
+        margin: 3rem 2rem;
+        width: $container-width;
+
+        header {
+
+            margin-bottom: 1rem;
+
+            p {
+                margin: 0
+            }
+        }
+
+        .art-description {
+            margin-top: 1rem;
+            width: 45vw;
+        }
+
+        .display-2 {
+            font-weight: bold !important;
+        }
+
+        p {
+            font-size: $text-size;
+        }
+
+        h1 {
+            font-weight: 600;
+        }
+    }
+
+    .img-container {
+        margin: 0rem 2rem !important;
+
+        img {
+            border: 2px solid black;
+        }
+
+        p {
+            color: darkgray;
+            align-self: center;
+            font-size: 0.813rem;
+            padding-top: 1rem;
+            font-style: italic;
+        }
+    }
+
+    .profile {
+        width: 80vw;
+    }
+
+    .art-content {
+
+        width: 80vw;
+
+        p.art-text {
+            margin-top: 1.5rem;
+            font-size: 21px;
+            // serif para una mejor lectura
+            font-family: serif !important;   
+            text-align: justify;
+            letter-spacing: 130%;
+            line-height: 2.2rem;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            margin-top: 2rem;
+            font-weight: bold !important;
+            color: $primary-color !important;
+        }
+
+
+    }
+
+    .art-actions {
+        width: 20vw;
+        i {
+            font-size: 3rem;
+            cursor: pointer;
+        }
+    }
+
+    .author-name {
+        font-weight: bold;
+        font-size: 1.2rem;
+    }
+
+    .followers {
+        font-size: 13px;
+    }
+}
+
+.follow {
+    background-color: $primary-color;
+    color: white;
+    border: 0;
+    padding: 1em 4em;
+    border: 2px solid $primary-color;
+    
+    transition: .3s ease;
+}
+
+.follow:hover {
+    background-color: $highlight-color;
+    color: $primary-color;
+    border: 2px solid $primary-color;
+}
+
+button {
+    border-radius: 5px !important;
+}
+
+footer {
+    background-color: $primary-color;
+    color: darkgray;
+    border: 0;
+}
+
+.socials{
+    i {
+        font-size: 3rem;
+        cursor: pointer;
+    
+        transition: .3s ease;
+    } 
+    i:hover {
+        color: #CEFF1A
+    }
+}
+
+.info {
+    a, p {
+        text-decoration: none;
+        color: gray;
+        font-size: 13px;
+    }
+}
+
+
+// cuando la pantalla sea igual o menor a 960px...
+@media (max-width: 960px) {
+    section {
+        h1 {
+            width: 90% !important;
+        }
+    }
+
+    .art-description {
+            width: 75vw !important;
+        }
+}
+
+@media (max-width: 1000px) {
+    .art-actions {
+        width: 60vw !important;
+    }
+}

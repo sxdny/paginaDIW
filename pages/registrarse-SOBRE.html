@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Articoders - Sign Up</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <main id="app">
+        <form class="container form-container">
+            <h1 id="h1Title">Sign Up</h1>
+            <div class="icon">
+                <i class="fa-solid fa-circle-user fa-1x icon-backgroung"></i>
+            </div>
+            <div class="form" id="form">
+                <input hidden id="hiddenId" type="text" name="hiddenId" value="0">
+                <p>
+                    <input required id="username" type="text" name="username" class="no-outline" placeholder="Usuario" />
+                </p>
+                <p>
+                    <input required id="email" type="text" name="email" class="no-outline" placeholder="Correo electrónico" />
+                </p>
+                <p>
+                    <input required id="password" type="password" name="password" class="no-outline" placeholder="Contraseña" />
+                </p>
+                <p class="p-button">
+                    <button id="sendData">Add user</button>
+                    <button id="updateData" class="d-none">Edit user</button>
+                </p>
+            </div>
+        </form>
+    
+        
+    </main>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
