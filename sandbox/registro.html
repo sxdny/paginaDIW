@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Registro de usuarios</title>
+</head>
+
+<body>
+    <h1>Registro de usuarios</h1>
+
+    <form>
+
+        <input hidden id="idOculta" type="text" value="0">
+
+        <label for="nombre">Nombre:</label><br>
+        <input maxlength="20" type="text" id="nombre" name="nombre" required><br><br>
+
+        <label for="email">Email:</label><br>
+        <input maxlength="255" type="email" id="email" name="email" required><br><br>
+
+        <label for="contrasena">Contraseña:</label><br>
+        <input maxlength="50" type="password" id="contrasena" name="contrasena" required><br><br>
+
+        <input" type="checkbox" id="admin" name="admin"><br>
+        <label for="admin">Administrador</label>
+
+        <br><br>
+
+        <button id="registrar"> Registrarse </button>
+
+    </form>
+
+    <!-- Lista de usuarios -->
+    <ul id="listaUsuarios">
+
+    </ul>
+
+    <p>Link para ir a la página de inicio: <a href="main.html">Inicio</a></p>
+
+    <script src="registro.js"></script>
+</body>
+
+</html>

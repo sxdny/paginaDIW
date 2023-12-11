@@ -214,8 +214,6 @@ function editUser() {
         email: email.value
     }
 
-    console.table(user);
-
     // creamos la transacción
     let transaction = db.transaction(DB_STORE_NAME, 'readwrite');
     let objectStore = transaction.objectStore(DB_STORE_NAME);
