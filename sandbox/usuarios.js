@@ -1,13 +1,9 @@
-// obtenemos los elemento del DOM
+// mostramos los datos del localStorage en la consola
+console.log(localStorage.getItem("nombre"));
+console.log(localStorage.getItem("email"));
+console.log(localStorage.getItem("contra"));
+console.log(localStorage.getItem("admin"));
 
-let idOculta = document.getElementById('idOculta');
-let nombre = document.getElementById('nombre');
-let email = document.getElementById('email');
-let contra = document.getElementById('contrasena');
-let admin = document.getElementById('admin');
-
-// botones de la página
-const REGISTRAR_BUTTON = document.getElementById('registrar');
 
 let indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
 
@@ -22,8 +18,10 @@ const DB_STORE_NAME = 'users';
 var db;
 var opened = false;
 
-// añadir evento al botón
-REGISTRAR_BUTTON.addEventListener('click', sendData);
+// comprobar que el usuario que ha entrado en la página es administrador
+if (localStorage.getItem("admin") == "false") {
+    location.href = "main.html";
+}
 
 // función para abrir la base de datos
 function openCreateDb(onDbCompleted) {
@@ -66,19 +64,6 @@ function openCreateDb(onDbCompleted) {
     };
 }
 
-// función para enviar los datos a la base de datos
-function sendData() {
-
-    openCreateDb((db) => {
-        if (idOculta.value == 0) {
-            insertUser(db);
-        }
-        else {
-            editUser(db);
-        }
-    });
-}
-
 // función para leer la información de la base de datos
 function readData() {
     openCreateDb((db) => {
@@ -117,46 +102,6 @@ function readUsers(db) {
     };
 }
 
-// función para insertar un usuario en la base de datos
-function insertUser(db) {
-
-    // abrimos la transacción
-    let tx = db.transaction(DB_STORE_NAME, 'readwrite');
-    let store = tx.objectStore(DB_STORE_NAME);
-
-    // añadimos el usuario
-    let req = store.add({
-        nombre: nombre.value,
-        email: email.value,
-        contra: contra.value,
-        admin: admin.checked
-    });
-
-    req.onsuccess = (e) => {
-        console.log("insertUser: user added");
-        console.log(e.target.result);
-
-        // guardar los datos del usuario en el local storage
-        localStorage.setItem("nombre", nombre.value);
-        localStorage.setItem("email", email.value);
-        localStorage.setItem("contra", contra.value);
-        localStorage.setItem("admin", admin.checked);
-
-        // redirigir a la página de inicio
-        window.location.href = "main.html";
-    };
-
-    req.onerror = (e) => {
-        console.error("insertUser: error adding user", e.target.errorCode);
-    };
-
-    tx.oncomplete = () => {
-        console.log("insertUser: tx completed");
-        db.close();
-        opened = false;
-    };
-}
-
 // función par mostrar los usuarios en una lista
 function showUsers(users) {
     let list = document.getElementById('listaUsuarios');
@@ -164,9 +109,31 @@ function showUsers(users) {
 
     for (let i = 0; i < users.length; i++) {
         let user = users[i];
+        // ponemos los datos del usuario en un li con inputs
         let li = document.createElement('li');
-        li.innerHTML = user.nombre + " " + user.email + " " + user.contra + " " + user.admin;
+
+        let inputNombre = document.createElement('input');
+        inputNombre.type = 'text';
+        inputNombre.value = user.nombre;
+        li.appendChild(inputNombre);
+
+        let inputEmail = document.createElement('input');
+        inputEmail.type = 'email';
+        inputEmail.value = user.email;
+        li.appendChild(inputEmail);
+
+        let inputContra = document.createElement('input');
+        inputContra.type = 'password';
+        inputContra.value = user.contra;
+        li.appendChild(inputContra);
+
+        let inputAdmin = document.createElement('input');
+        inputAdmin.type = 'checkbox';
+        inputAdmin.checked = user.admin;
+        li.appendChild(inputAdmin);
+
         list.appendChild(li);
+
     }
 
     // añadir botones de editar y eliminar
@@ -237,6 +204,14 @@ function borrarUsuario(id) {
         req.onsuccess = (e) => {
             console.log("borrarUsuario: user deleted");
             console.log(e.target.result);
+
+            // borrar los datos del localStorage si el email coincide con el usuario que se ha borrado
+            // if (localStorage.getItem("email") == e.target.result.email) {
+            //     localStorage.removeItem("nombre");
+            //     localStorage.removeItem("email");
+            //     localStorage.removeItem("contra");
+            //     localStorage.removeItem("admin");
+            // }
         };
 
         req.onerror = (e) => {
@@ -253,26 +228,6 @@ function borrarUsuario(id) {
     // recargar la página
     location.reload();
 }
-
-// función para mostrar el formulario de editar usuario
-function formularioEditarUsuario(user) {
-    idOculta.value = user.id;
-    nombre.value = user.nombre;
-    email.value = user.email;
-    contra.value = user.contra;
-    admin.checked = user.admin;
-
-    // cambiar el texto del botón
-    REGISTRAR_BUTTON.innerHTML = "Editar usuario";
-    // cambiar la acción del botón
-    REGISTRAR_BUTTON.removeEventListener('click', sendData);
-
-    // imprimimos la función actual que tiene el botón
-
-    REGISTRAR_BUTTON.onclick = editUser;
-
-}
-
 
 window.onload = function () {
     console.log(crypto.randomUUID())
