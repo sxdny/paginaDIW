@@ -1,5 +1,7 @@
 # To-Dos
 
+Hacer lo de CryptoJS con CDN.
+
 Todas las cosas que tienen que estar hechas para la actividad de DIW:
 
 ### Gestión de usuarios

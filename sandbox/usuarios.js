@@ -149,7 +149,7 @@ function showUsers(users) {
         let editButton = document.createElement('button');
         editButton.innerHTML = "Editar";
         editButton.addEventListener('click', () => {
-            formularioEditarUsuario(users[i]);
+            editUser(users[i]);
         });
 
         li.appendChild(editButton);
@@ -165,7 +165,7 @@ function showUsers(users) {
 }
 
 // función para editar un usuario en la base de datos
-function editUser() {
+function editUser(id) {
 
     // abrimos la transacción
     let tx = db.transaction(DB_STORE_NAME, 'readwrite');
@@ -174,11 +174,11 @@ function editUser() {
     // actualizamos el usuario
 
     let req = store.put({
-        id: parseInt(idOculta.value),
         nombre: nombre.value,
         email: email.value,
         contra: contra.value,
-        admin: admin.checked
+        admin: admin.checked,
+        avatar: avatar.value
     });
 
     req.onsuccess = (e) => {

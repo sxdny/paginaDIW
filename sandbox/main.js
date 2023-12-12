@@ -111,6 +111,7 @@ function readData() {
 
 // añadir el evento click
 cerrarSesion.addEventListener("click", () => {
+    
     // borrar los datos del local storage
     localStorage.removeItem("nombre");
     localStorage.removeItem("email");

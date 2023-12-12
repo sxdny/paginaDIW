@@ -1,3 +1,5 @@
+let CryptoJS = require("crypto-js");
+
 // obtenemos los elemento del DOM
 
 let idOculta = document.getElementById('idOculta');
@@ -313,13 +315,11 @@ function formularioEditarUsuario(user) {
     REGISTRAR_BUTTON.removeEventListener('click', sendData);
 
     // imprimimos la función actual que tiene el botón
-
     REGISTRAR_BUTTON.onclick = editUser;
 
 }
 
 
 window.onload = function () {
-    console.log(crypto.randomUUID())
     readData();
 }
