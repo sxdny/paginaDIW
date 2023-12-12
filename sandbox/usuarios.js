@@ -132,6 +132,12 @@ function showUsers(users) {
         inputAdmin.checked = user.admin;
         li.appendChild(inputAdmin);
 
+        let avatar = document.createElement('img');
+        avatar.src = user.avatar;
+        avatar.style.width = "50px";
+        avatar.style.height = "50px";
+        li.appendChild(avatar);
+
         list.appendChild(li);
 
     }

@@ -5,6 +5,7 @@ let nombre = document.getElementById('nombre');
 let email = document.getElementById('email');
 let contra = document.getElementById('contrasena');
 let admin = document.getElementById('admin');
+let avatar = document.getElementById('avatar');
 
 // botones de la página
 const REGISTRAR_BUTTON = document.getElementById('registrar');
@@ -21,6 +22,7 @@ const DB_STORE_NAME = 'users';
 // definimos la base de datos y su estado
 var db;
 var opened = false;
+let base64String = "";
 
 // añadir evento al botón
 REGISTRAR_BUTTON.addEventListener('click', sendData);
@@ -57,6 +59,7 @@ function openCreateDb(onDbCompleted) {
         store.createIndex("email", "email", { unique: true });
         store.createIndex("contra", "contra", { unique: false });
         store.createIndex("admin", "admin", { unique: false });
+        store.createIndex("avatar", "avatar", { unique: false });
 
         console.log("openCreateDb: Object store indexes created");
     };
@@ -117,6 +120,39 @@ function readUsers(db) {
     };
 }
 
+// función para leer la imagen que selecciona el usuario
+
+let reader = new FileReader();
+
+function leerImagen(archivo) {
+    // comprobar si el archivo es una imagen
+    if (archivo.type && !archivo.type.startsWith('image/')) {
+        console.log('File is not an image.', archivo.type, archivo);
+        return;
+    }
+
+    // crear un objeto de tipo FileReader
+    let reader = new FileReader();
+    reader.addEventListener('load', (event) => {
+        base64String = event.target.result;
+        // mostrar la imagen
+        document.getElementById("imagenAvatar").src = event.target.result;
+    });
+    reader.readAsDataURL(archivo);
+}
+
+// función para mostrar la imagen seleccionada por el usuario
+function mostrarImagen() {
+    // obtener el archivo seleccionado por el usuario
+    let archivo = document.getElementById("avatar").files[0];
+    leerImagen(archivo);
+}
+
+// añadimos el evento change al input file
+avatar.addEventListener('change', () => {
+    mostrarImagen();
+});
+
 // función para insertar un usuario en la base de datos
 function insertUser(db) {
 
@@ -124,12 +160,19 @@ function insertUser(db) {
     let tx = db.transaction(DB_STORE_NAME, 'readwrite');
     let store = tx.objectStore(DB_STORE_NAME);
 
+    let reader = new FileReader();
+    reader.onloadend = () => {
+        base64String = reader.result;
+    }
+    reader.readAsDataURL(avatar.files[0]);
+
     // añadimos el usuario
     let req = store.add({
         nombre: nombre.value,
         email: email.value,
         contra: contra.value,
-        admin: admin.checked
+        admin: admin.checked,
+        avatar: base64String
     });
 
     req.onsuccess = (e) => {
@@ -141,6 +184,7 @@ function insertUser(db) {
         localStorage.setItem("email", email.value);
         localStorage.setItem("contra", contra.value);
         localStorage.setItem("admin", admin.checked);
+        localStorage.setItem("avatar", avatar.value);
 
         // redirigir a la página de inicio
         window.location.href = "main.html";
@@ -157,6 +201,7 @@ function insertUser(db) {
     };
 }
 
+
 // función par mostrar los usuarios en una lista
 function showUsers(users) {
     let list = document.getElementById('listaUsuarios');
@@ -165,7 +210,7 @@ function showUsers(users) {
     for (let i = 0; i < users.length; i++) {
         let user = users[i];
         let li = document.createElement('li');
-        li.innerHTML = user.nombre + " " + user.email + " " + user.contra + " " + user.admin;
+        li.innerHTML = user.nombre + " " + user.email + " " + user.contra + " " + user.admin + " " + user.avatar;
         list.appendChild(li);
     }
 
