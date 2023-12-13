@@ -131,7 +131,6 @@ function readData() {
                 }
             }
 
-
         };
 
         req.onerror = (e) => {

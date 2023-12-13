@@ -160,13 +160,6 @@ function insertUser(db) {
         console.log("insertUser: user added");
         console.log(e.target.result);
 
-        // guardar los datos del usuario en el local storage
-        localStorage.setItem("nombre", nombre.value);
-        localStorage.setItem("email", email.value);
-        localStorage.setItem("contra", contra.value);
-        localStorage.setItem("admin", admin.checked);
-        localStorage.setItem("avatar", avatar.value);
-
         // redirigir a la página de inicio
         window.location.href = "main.html";
     };

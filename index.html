@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="es" data-bs-theme="dark">
+<html lang="es" data-bs-theme="light">
 
 <head>
     <meta charset="utf-8">
@@ -17,139 +17,11 @@
 
 </head>
 
-<!-- Pasar esto a un archivo porfavor -->
-<style>
-    @font-face {
-        font-family: "Helvetica";
-        src: url("fonts/Helvetica/Helvetica.ttf");
-    }
-
-    .bg-body {
-        background-color: #FDFDFD !important;
-    }
-
-    i {
-        font-size: 1.7rem;
-    }
-
-    .buttons-sect>i {
-        font-size: 3rem;
-    }
-
-    .heading,
-    .search {
-        color: #141414;
-    }
-
-    .border-bottom,
-    .border-top,
-    .border-end,
-    .border-start,
-    .border {
-        border-color: #13293d !important;
-    }
-
-    .button {
-        border: 2px solid #13293d;
-        color: #141414;
-        background-color: #CEFF1A;
-        font-weight: bold;
-        font-size: 1.2rem;
-    }
-
-    footer {
-        padding: 0 !important;
-    }
-
-    footer>.border-bottom {
-        border-color: #2e455a !important;
-    }
-
-    .navbar,
-    .hero,
-    .socials>p,
-    footer {
-        background-color: #13293d !important;
-        color: #E4F4FF !important;
-    }
-
-    @font-face {
-        font-family: "SF Mono";
-        src: url("fonts/SFMono/SFMono-Bold.otf") format("opentype");
-    }
-
-    p,
-    h1 {
-        font-family: "Helvetica" !important;
-        color: #141414;
-    }
-
-    .art-image-sm,
-    .img {
-        background-image: url("https://source.unsplash.com/random");
-        background-position: center;
-    }
-
-    .username-text {
-        color: #1f1f1f;
-        margin-bottom: 1px !important;
-    }
-
-    .text-muted {
-        color: #5c5c5c !important;
-    }
-
-    .display-1 {
-        font-family: "SF Mono" !important;
-        color: #FDFDFD !important;
-        letter-spacing: -5px;
-    }
-
-    .trend-article>p.text-muted {
-        font-size: 0.9rem;
-    }
-
-    h1,
-    h2,
-    h3,
-    h4,
-    h5 {
-        font-family: "Helvetica" !important;
-        font-weight: bold;
-    }
-
-    .display-2,
-    .display-5 {
-        font-family: "Helvetica" !important;
-        font-weight: bold;
-    }
-
-    .art-nav-s>p {
-        font-size: 0.9rem;
-    }
-
-    .texto-etiquetas,
-    .art-destacado,
-    .art {
-        color: #141414 !important;
-    }
-
-    .etiqueta {
-        background-color: rgb(221, 221, 221);
-        color: #141414;
-    }
-
-    .copy>p,
-    .politicas>p {
-        color: #b4ddf8 !important;
-    }
-</style>
-
-<body class="justify-content-center" style="background-color: #E4F4FF">
+<body class="justify-content-center">
 
     <!-- Navbar -->
 
-    <nav style="border-bottom: 1px solid #5c5c5c;" class="navbar navbar-expand-lg bg-body py-3 px-5">
+    <nav class="navbar navbar-expand-lg py-3 px-5">
         <div class="container-fluid px-5">
             <a class="navbar-brand" href="#">Articoders</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -159,7 +31,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li id="sessionMenu" class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="pages/registrarse.html">Registrarse</a>
+                        <a id="login" class="nav-link active" aria-current="page" href="pages/login.html">Iniciar sesión</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Escritores</a>
@@ -175,19 +47,21 @@
                     </li>
                 </ul>
             </div>
-            <div class="avatar">
-                <button id="logout" type="button">Cerrar sesión</button>
-                <img id="avatar" src="images/drake-sassy.jpg" alt="" srcset="">
-            </div>
+            
         </div>
     </nav>
 
+    <div id="infoUsuario">
+        <p>Hola como estas</p>
+        <button id="logout">Cerrar sesión</button>
+    </div>
     <!-- Hero -->
-    <div id="hero" class="hero bg-body p-5 d-flex text-start">
+    <div class="hero p-5 d-flex text-start">
         <div class="w-100 mx-5">
             <p class="display-1">Solo imagínate que esto és un título.</p>
         </div>
     </div>
+
 
     <!-- Articles view -->
     <div style="margin: 0 !important;"" class=" row">
@@ -480,7 +354,7 @@
 
         </footer>
 
-        <script src="homepage_script.js"></script>
+        <script src="index.js"></script>
         <script src="https://kit.fontawesome.com/e93ba2c81b.js" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
             integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
