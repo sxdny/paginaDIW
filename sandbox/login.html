@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Iniciar sesión</title>
+</head>
+
+<body>
+    <h1>Iniciar sesión</h1>
+
+    <form>
+        <label for="correo">Correo electrónico:</label>
+        <input type="text" id="correo" name="correo" required><br><br>
+
+        <label for="password">Contraseña:</label>
+        <input type="password" id="password" name="password" required><br><br>
+
+        <input id="loginButton" type="submit" value="Iniciar sesión">
+    </form>
+
+    <p id="mensaje"></p>
+    <!-- Link para volver a la página principal -->
+    <p><a href="main.html">Volver a la página principal</a></p>
+
+    <p>¿No tienes cuenta? <a href="registro.html">Regístrate</a></p>
+
+
+</body>
+
+
+<script src="login.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"
+    integrity="sha512-a+SUDuwNzXDvz4XrIcXHuCf089/iJAoN4lmrXJg18XnduKK6YlDHNRalv4yd1N40OKI80tFidF+rqTFKGPoWFQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+</html>

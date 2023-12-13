@@ -46,6 +46,8 @@ function openCreateDb(onDbCompleted) {
         store.createIndex("email", "email", { unique: true });
         store.createIndex("contra", "contra", { unique: false });
         store.createIndex("admin", "admin", { unique: false });
+        store.createIndex("avatar", "avatar", { unique: false });
+        store.createIndex("logged", "logged", { unique: false });
 
         console.log("openCreateDb: Object store indexes created");
     };
@@ -62,8 +64,6 @@ function readData() {
 };
 
 // función para leer la información de la base de datos del usuario que ha iniciado sesión
-
-console.log(localStorage.getItem("email"));
 
 function readData() {
     // abrimos la base de datos
@@ -84,22 +84,53 @@ function readData() {
         req.onsuccess = (e) => {
             
             let cursor = e.target.result;
+
             if (cursor) {
-                if (cursor.value.email == localStorage.getItem("email")) {
+
+                // comprobamos si logged está a true
+                if (cursor.value.logged == true) {
+
+                    console.log("readData: User logged in");
+                    console.log(cursor.value);
+
+                    // mostramos los datos del usuario en el div de datos del usuario
+                    document.getElementById("nombre").innerHTML = cursor.value.nombre;
+                    document.getElementById("email").innerHTML = cursor.value.email;
+                    document.getElementById("foto").setAttribute("src", cursor.value.avatar);
+                    document.getElementById("foto").style.width = "100px";
+
                     users.push(cursor.value);
+
+                    // ocultamos el div de inicio de sesión
+                    document.getElementById("bienvenida").style.display = "none";
+
+                    // comprobar si el usuario es administrador
+                    if (cursor.value.admin == true) {
+                        // mostramos el div de administración
+                        document.getElementById("admin").style.display = "true";
+                    }
+                    else {
+                        // mostramos el div de usuario
+                        document.getElementById("admin").style.display = "none";
+                    }
+                }
+                else {
                     cursor.continue();
                 }
             }
             else {
                 console.log("readUsers: users readed: " + users.length);
+
+                if (users.length == 0) {
+                    console.log("No hay ningún usuario logueado");
+                    // mostramos el div de inicio de sesión
+                    document.getElementById("bienvenida").style.display = "true";
+
+                    // ocultamos el div de administración
+                    document.getElementById("datosUsuario").style.display = "none";
+                }
             }
 
-            // mostramos los datos del usuario
-            document.getElementById("nombre").innerHTML = users[0].nombre;
-            document.getElementById("email").innerHTML = users[0].email;
-            // mostramos el avatar
-            document.getElementById("foto").src = users[0].avatar;
-            document.getElementById("foto").width = "100";
 
         };
 
@@ -112,35 +143,82 @@ function readData() {
 // añadir el evento click
 cerrarSesion.addEventListener("click", () => {
     
-    // borrar los datos del local storage
-    localStorage.removeItem("nombre");
-    localStorage.removeItem("email");
-    localStorage.removeItem("contra");
-    localStorage.removeItem("admin");
+    // abrimos la base de datos
+    openCreateDb((db) => {
+        // abrimos la transacción
+        var transaction = db.transaction(DB_STORE_NAME, "readonly");
+        console.log("readData: Transaction created");
+
+        // abrimos el store
+        var store = transaction.objectStore(DB_STORE_NAME);
+        console.log("readData: Store opened");
+
+        // leemos los datos del usuario que ha iniciado sesión
+        var req = store.openCursor();
+
+        let users = [];
+
+        req.onsuccess = (e) => {
+            
+            let cursor = e.target.result;
+            if (cursor) {
+                // comprobamos si logged está a true
+                if (cursor.value.logged == true) {
+                    users.push(cursor.value);
+
+                    // llamamos a la función logout para cambiar el estado de logged a false
+                    logout(users[0]);
+                }
+                else {
+                    cursor.continue();
+                }
+            }
+            else {
+                console.log("readUsers: users readed: " + users.length);
+            }
+        };
+
+        req.onerror = (e) => {
+            console.log("readData: Error reading " + e.target.errorCode);
+        };
+    });
 
     // recargar la página
     window.location.reload();
 });
 
-
-// si el usuario es administrador, mostramos el botón de administración
-if (localStorage.getItem("admin") == "true") {
-    document.getElementById("admin").style.display = "block";
-}
-else {
-    document.getElementById("admin").style.display = "none";
+// función para cambiar el estado de logged a false
+function logout(user) {
+    openCreateDb((db) => {
+        loggedFalse(db, user);
+    })
 }
 
-window.onload = function () {
-    // comprobar si hay un usuario guarda en el local storage
-    if (localStorage.getItem("nombre") == null) {
-        // ocultamos el div de datos del usuario
-        document.getElementById("datosUsuario").style.display = "none";
-    }
-    else {
-        // ocultar el div de bienvenida
-        document.getElementById("bienvenida").style.display = "none";
-        readData()
-    }
+function loggedFalse(db, user) {
+    // abrimos la transacción
+    let tx = db.transaction(DB_STORE_NAME, 'readwrite');
+    let store = tx.objectStore(DB_STORE_NAME);
+
+    // actualizamos el estado de logged a false
+    user.logged = false;
+
+    // actualizamos el usuario
+    let req = store.put(user);
+
+    req.onsuccess = (e) => {
+        console.log("loggedFalse: User logged out");
+
+        // recargamos la página
+        window.location.reload();
+    };
+
+    req.onerror = (e) => {
+        console.log("loggedFalse: Error updating user " + e.target.errorCode);
+    };
+}
+
+
+window.onload = () => {
+    readData();
 }
 

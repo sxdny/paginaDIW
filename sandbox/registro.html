@@ -10,6 +10,8 @@
 
     <form>
 
+        <p id="mensaje"></p>
+
         <input hidden id="idOculta" type="text" value="0">
 
         <label for="nombre">Nombre:</label><br>
@@ -22,13 +24,13 @@
         <input maxlength="50" type="password" id="contrasena" name="contrasena" required><br><br>
 
         <input type="checkbox" id="admin" name="admin">
-        <label for="admin">Administrador</label>
-
-        <br><br>
+        <label for="admin">Administrador</label> <br><br>
 
         <!-- Introducir un avatar -->
         <label for="avatar">Avatar:</label><br><br>
         <input type="file" id="avatar" name="avatar" accept="image/png, image/jpeg"><br><br>
+
+        <br><br>
 
         <!-- Preview del avatar -->
         <div id="previewAvatar">
@@ -40,10 +42,6 @@
 
     </form>
 
-    <!-- Lista de usuarios -->
-    <ul id="listaUsuarios">
-
-    </ul>
 
     <p>Link para ir a la página de inicio: <a href="main.html">Inicio</a></p>
 

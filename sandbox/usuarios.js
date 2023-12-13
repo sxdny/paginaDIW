@@ -200,35 +200,34 @@ function editUser(id) {
 // función para borrar un usuario de la base de datos
 function borrarUsuario(id) {
     openCreateDb((db) => {
+
         // abrimos la transacción
         let tx = db.transaction(DB_STORE_NAME, 'readwrite');
         let store = tx.objectStore(DB_STORE_NAME);
 
+        // leemos los datos del usuario que ha iniciado sesión
+        var req = store.openCursor();
+
         // borramos el usuario
-        let req = store.delete(id);
+        store.delete(id);
 
         req.onsuccess = (e) => {
-            console.log("borrarUsuario: user deleted");
-            console.log(e.target.result);
 
-            // borrar los datos del localStorage si el email coincide con el usuario que se ha borrado
-            // if (localStorage.getItem("email") == e.target.result.email) {
-            //     localStorage.removeItem("nombre");
-            //     localStorage.removeItem("email");
-            //     localStorage.removeItem("contra");
-            //     localStorage.removeItem("admin");
-            // }
-        };
+            let cursor = e.target.result;
 
-        req.onerror = (e) => {
-            console.error("borrarUsuario: error deleting user", e.target.errorCode);
-        };
+            if (cursor) {
+                // comprobamos si logged está a true
+                if (cursor.value.logged == true && cursor.value.id == id) {
+                    // redirigir a la página de inicio
+                    location.href = "main.html";
+                }
+                cursor.continue();
+            }
+            else {
+                console.log("readData: User not found");
+            }
+        }
 
-        tx.oncomplete = () => {
-            console.log("borrarUsuario: tx completed");
-            db.close();
-            opened = false;
-        };
     });
 
     // recargar la página
