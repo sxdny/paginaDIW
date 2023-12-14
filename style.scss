@@ -17,6 +17,24 @@ body {
     src: url("fonts/Helvetica/Helvetica.ttf");
 }
 
+.user {
+    display: flex;
+    align-items: center;
+    color: white;
+    justify-content: space-around;
+    text-align: center;
+    gap: 1rem;
+}
+
+.user > p {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: white !important;
+    margin: 0 !important;
+    gap: 1rem;
+}
+
 .bg-body {
     background-color: #fdfdfd !important;
 }
@@ -28,6 +46,26 @@ i {
 
 .buttons-sect > i {
     font-size: 3rem;
+}
+
+#infoUsuario {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 6rem;
+    background-color: #13293d;
+    gap: 1rem;
+    border-bottom: 0.5px solid white;
+    border-top: 0.5px solid white;
+}
+
+#avatar {
+    width: 5rem;
+    height: 5rem;
+    border-radius: 5rem;
+    border: 1px solid #13293d;
+    box-shadow: none;
+    cursor: default;
 }
 
 label {

@@ -5,6 +5,7 @@ let usuario = document.getElementById("usuario");
 let correo = document.getElementById("correo");
 let contra = document.getElementById("contra");
 let contraConfirmar = document.getElementById("contraConfirmar");
+let admin = document.getElementById("admin");
 
 // Obtenemos los avatares
 let avatar1 = document.getElementById("avatar1");
@@ -28,7 +29,7 @@ var database = "usersDB";
 const DB_VERSION = 1;
 
 // nombre de la tabla
-const DB_STORE_NAME = 'usuarios';
+const DB_STORE_NAME = 'users';
 
 // definimos la base de datos y su estado
 var db;
@@ -41,7 +42,14 @@ let rutaImagen = "";
 
 // Eventos de los botones
 
-REGISTRAR_BTN.addEventListener('click', () => {
+REGISTRAR_BTN.addEventListener('click', (e) => {
+
+    e.preventDefault();
+
+    rutaImagen = getAvatar();
+
+    console.log(usuario.value + " " + correo.value + " " + contra.value + " " + contraConfirmar.value + " " + rutaImagen);
+
     // comprobar si los campos están vacíos
     if (usuario.value == "" || correo.value == "" || contra.value == "" || contraConfirmar.value == "") {
         mensaje.innerHTML = "Debes rellenar todos los campos";
@@ -115,6 +123,9 @@ function sendData() {
 
 // función para insertar un usuario
 function insertUser(db) {
+
+    console.log(db);
+
     // abrimos la transacción
     var tx = db.transaction(DB_STORE_NAME, 'readwrite');
     var store = tx.objectStore(DB_STORE_NAME);
@@ -130,8 +141,8 @@ function insertUser(db) {
         usuario: usuario.value,
         correo: correo.value,
         contra: contraEncriptada,
-        avatar: base64String,
-        admin: false,
+        avatar: rutaImagen,
+        admin: admin.checked,
         logged: true
     };
 
@@ -139,8 +150,9 @@ function insertUser(db) {
     var req = store.add(user);
 
     req.onsuccess = (e) => {
-        console.log("sendData: User added to the database");
-        window.location.href = "index.html";
+        alert("sendData: User added to the database");
+        alert(user.usuario + " " + user.correo + " " + user.contra + " " + user.avatar + " " + user.admin + " " + user.logged)
+        window.location.href = "../index.html";
     };
 
     req.onerror = (e) => {
@@ -161,10 +173,10 @@ function insertUser(db) {
 // función para obtener el avatar seleccionado por el usuario
 function getAvatar() {
     if (avatar1.checked) {
-        return "img/avatar1.png";
+        return "images/avatar1.jpg";
     } else if (avatar2.checked) {
-        return "img/avatar2.png";
+        return "images/avatar2.jpg";
     } else if (avatar3.checked) {
-        return "img/avatar3.png";
+        return "images/avatar3.jpg";
     }
 }

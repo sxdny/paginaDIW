@@ -26,6 +26,40 @@ var opened = false;
 
 // Eventos de los botones
 
+logoutBTN.addEventListener('click', (e) => {
+    openCreateDb((db) => {
+        // abrimos la transacción
+        var tx = db.transaction(DB_STORE_NAME, "readwrite");
+        var store = tx.objectStore(DB_STORE_NAME);
+
+        // abrimos el cursor
+        var req = store.openCursor();
+
+        let users = [];
+
+        req.onsuccess = (e) => {
+            let cursor = e.target.result;
+
+            if (cursor) {
+
+                // comprobamos el logged está a true
+                if (cursor.value.logged == true) {
+                    users.push(cursor.value);
+
+                    // llamamos a la función logout para cambiar el estado de logged a false
+                    logoutUsers(users[0]);
+                }
+                else {
+                    cursor.continue();
+                }
+            }
+            else {
+                console.log("readUsers: users readed: " + users.length);
+            }
+        }
+    });
+});
+
 // ---------------------------------------------
 
 // Funciones
@@ -59,11 +93,11 @@ function openCreateDb(onDbCompleted) {
         console.log("openCreateDb: Object store created");
 
         // definimos los campos de la tabla
-        store.createIndex("nombre", "nombre", { unique: false });
-        store.createIndex("email", "email", { unique: true });
+        store.createIndex("usuario", "usuario", { unique: true });
+        store.createIndex("correo", "correo", { unique: true });
         store.createIndex("contra", "contra", { unique: false });
-        store.createIndex("admin", "admin", { unique: false });
         store.createIndex("avatar", "avatar", { unique: false });
+        store.createIndex("admin", "admin", { unique: false });
         store.createIndex("logged", "logged", { unique: false });
 
         console.log("openCreateDb: Object store indexes created");
@@ -101,22 +135,19 @@ function readUsers(db) {
             if (cursor.value.logged) {
 
                 // mostramos el div de información del usuario
-                infoUsuario.style.display = "block";
+                infoUsuario.style.display = "flex";
 
-                // mostramos la información del usuario
-                infoUsuario.innerHTML = `<h2>Información del usuario</h2>
-                <p>Nombre: ${cursor.value.nombre}</p>
-                <p>Correo electrónico: ${cursor.value.email}</p>
-                <p>Contraseña: ${cursor.value.contra}</p>
-                <p>Administrador: ${cursor.value.admin}</p>
-                <p>Avatar: ${cursor.value.avatar}</p>
-                <p>Logueado: ${cursor.value.logged}</p>`;
+                let avatar = document.getElementById("avatar");
+                avatar.src = "/" + cursor.value.avatar;
+
+                let username = document.getElementById("username");
+                username.innerHTML = cursor.value.usuario;
 
                 // ocultamos el botón de login
                 login.style.display = "none";
 
                 // añadimos la acción de lo al botón de lo
-                lo.addEventListener("click", () => {
+                login.addEventListener("click", () => {
 
                     // abrimos la base de datos
                     openCreateDb((db) => {
@@ -136,9 +167,6 @@ function readUsers(db) {
                                 // comprobamos el logged está a true
                                 if (cursor.value.logged == true) {
                                     users.push(cursor.value);
-
-                                    // llamamos a función lo para cambiar el estado de logged a false
-                                    loUser(users[0]);
                                 }
                                 else {
 
@@ -193,13 +221,13 @@ function readUsers(db) {
 }
 
 // función para cerrar la sesión de un usuario
-function loUsers(user) {
+function logoutUsers(user) {
     openCreateDb((db) => {
-        lo(db, user);
+        logout(db, user);
     });
 }
 
-function lo(db, user) {
+function logout(db, user) {
     // abrimos la treansacción
     var tx = db.transaction(DB_STORE_NAME, "readwrite");
     var store = tx.objectStore(DB_STORE_NAME);

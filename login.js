@@ -1,5 +1,5 @@
 // leemos los elementos del formulario
-let username = document.getElementById("username");
+let correo = document.getElementById("correo");
 let password = document.getElementById("password");
 let loginButton = document.getElementById("loginButton");
 let infoUsuario = document.getElementById("infoUsuario");
@@ -93,7 +93,7 @@ function readData() {
                 // desenctiptamos la contraseña
                 let contraDesencriptada = CryptoJS.AES.decrypt(cursor.value.contra, "contra").toString(CryptoJS.enc.Utf8);
 
-                if (username.value == cursor.value.email && password.value == contraDesencriptada) {
+                if (correo.value == cursor.value.correo && password.value == contraDesencriptada) {
 
                     users.push(cursor.value);
                     cursor.continue();
@@ -105,12 +105,13 @@ function readData() {
                     login(users[0]);
 
                     // redirigimos a la página de inicio
-                    window.location.href = "main.html";
+                    window.location.href = "../index.html";
                 }
                 else {
                     cursor.continue();
-                    // guardar el mensaje en el localStorage
-                    localStorage.setItem("mensaje", "Usuario o contraseña incorrectos");
+                    // mostramos el mensaje de error
+                    mensaje.innerHTML = "Usuario o contraseña incorrectos";
+                    mensaje.style.color = "red";
                 }
             }
             else {
@@ -156,17 +157,9 @@ function loggedTrue(db, user) {
 }
 
 // cuando le de al botón, leemos los datos
-loginButton.addEventListener("click", () => {
-    console.log("loginButton: click");
+loginButton.addEventListener("click", (e) => {
+    e.preventDefault();
     readData();
 });
 
-// función para mostrar el mensaje de error
-function mostrarMensaje() {
-    document.getElementById("mensaje").innerHTML = localStorage.getItem("mensaje");
-    document.getElementById("mensaje").style.color = "red";
-}
 
-window.onload = () => {
-    mostrarMensaje();
-}

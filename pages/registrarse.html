@@ -53,14 +53,14 @@
         <h1 class="align-self-center display-1">Únete ya</h1>
         <p id="mensaje"></p>
         <div class="">
-            <form method="GET" action="../index.html"
-                class="d-flex flex-column gap-4 justify-content-center align-content-center my-5 w-md-100">
+            <form class="d-flex flex-column gap-4 justify-content-center align-content-center my-5 w-md-100">
 
                 <input type="number" hidden id="hiddenId" name="hiddenId">
 
                 <div class="campo">
                     <label>Nombre de usuario:</label>
-                    <input autocomplete="username" class="col-md mt-2 w-100 py-2" id="usuario" type="text" name="usuario">
+                    <input autocomplete="username" class="col-md mt-2 w-100 py-2" id="usuario" type="text"
+                        name="usuario">
                 </div>
 
                 <div class="campo">
@@ -70,12 +70,19 @@
 
                 <div class="campo">
                     <label>Contraseña:</label>
-                    <input autocomplete="new-password" class="col-md w-100 mt-2 py-2" id="contra" type="password" name="contra">
+                    <input autocomplete="new-password" class="col-md w-100 mt-2 py-2" id="contra" type="password"
+                        name="contra">
                 </div>
 
                 <div class="campo">
                     <label>Confirmar contraseña:</label>
-                    <input autocomplete="new-password" class="col-md mt-2 w-100 py-2" id="username" type="password" name="contraConfirmar">
+                    <input autocomplete="new-password" class="col-md mt-2 w-100 py-2" id="contraConfirmar" type="password"
+                        name="contraConfirmar">
+                </div>
+
+                <div class="campo">
+                    <label>Administrador:</label>
+                    <input class="col-md mt-2 p-2" id="admin" type="checkbox" name="admin">
                 </div>
 
                 <ul class="avatar-picker d-flex justify-content-center">
@@ -128,6 +135,7 @@
     </section>
 
     <script src="../script.js"></script>
+
     <script src=" https://kit.fontawesome.com/e93ba2c81b.js" crossorigin="anonymous">
     </script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"

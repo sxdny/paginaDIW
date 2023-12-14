@@ -1,10 +1,3 @@
-// mostramos los datos del localStorage en la consola
-console.log(localStorage.getItem("nombre"));
-console.log(localStorage.getItem("email"));
-console.log(localStorage.getItem("contra"));
-console.log(localStorage.getItem("admin"));
-
-
 let indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
 
 // definimos la base de datos
@@ -17,11 +10,6 @@ const DB_STORE_NAME = 'users';
 // definimos la base de datos y su estado
 var db;
 var opened = false;
-
-// comprobar que el usuario que ha entrado en la página es administrador
-if (localStorage.getItem("admin") == "false") {
-    location.href = "main.html";
-}
 
 // función para abrir la base de datos
 function openCreateDb(onDbCompleted) {
@@ -51,10 +39,12 @@ function openCreateDb(onDbCompleted) {
         console.log("openCreateDb: Object store created");
 
         // definimos los campos de la tabla
-        store.createIndex("nombre", "nombre", { unique: false });
-        store.createIndex("email", "email", { unique: true });
+        store.createIndex("usuario", "usuario", { unique: true });
+        store.createIndex("correo", "correo", { unique: true });
         store.createIndex("contra", "contra", { unique: false });
+        store.createIndex("avatar", "avatar", { unique: false });
         store.createIndex("admin", "admin", { unique: false });
+        store.createIndex("logged", "logged", { unique: false });
 
         console.log("openCreateDb: Object store indexes created");
     };
@@ -71,6 +61,41 @@ function readData() {
     })
 };
 
+let flagUsuario = false;
+
+// función para comprobar si el usuario está logueado y es administrador
+function saberSiAdmin() {
+    openCreateDb((db) => {
+        let tx = db.transaction(DB_STORE_NAME, 'readonly');
+        let store = tx.objectStore(DB_STORE_NAME);
+
+        // obtenemos el cursor
+        let req = store.openCursor();
+
+        req.onsuccess = (e) => {
+            let cursor = e.target.result;
+
+            if (cursor) {
+                // comprobamos si el usuario está logueado y si es admin
+                if (cursor.value.logged && cursor.value.admin) {
+                    console.log("saberSiAdmin: user found");
+
+                    flagUsuario = true;
+                }
+
+                cursor.continue();
+            }
+            else {
+                console.log("saberSiAdmin: user not found");
+            }
+        }
+
+        req.onerror = (e) => {
+            console.error("saberSiAdmin: error reading users", e.target.errorCode);
+        };
+    });
+}
+
 // función para leer los usuarios de la base de datos
 function readUsers(db) {
     // abrimos la transacción
@@ -85,22 +110,38 @@ function readUsers(db) {
 
     // función para recorrer los usuarios
     req.onsuccess = (e) => {
-        let cursor = e.target.result;
-        if (cursor) {
-            users.push(cursor.value);
-            cursor.continue();
+
+        // comprobar que el usuario que está logueado es administrador
+
+        if (flagUsuario) {
+            let cursor = e.target.result;
+
+            if (cursor) {
+                users.push(cursor.value);
+                cursor.continue();
+            }
+            else {
+                console.log("readUsers: user not found");
+                // mostramos los usuarios en la tabla
+                showUsers(users);
+            }
+
+            if (users.length == 0) {
+                console.log("readUsers: no users");
+                location.href = "../index.html";
+            }
         }
         else {
-            console.log("readUsers: users readed: " + users.length);
-            // mostramos los usuarios en la tabla
-            showUsers(users);
+            console.log("No eres administrador");
+            location.href = "../index.html";
         }
-    };
+    }
 
     req.onerror = (e) => {
         console.error("readUsers: error reading users", e.target.errorCode);
     };
-}
+};
+
 
 // función par mostrar los usuarios en una lista
 function showUsers(users) {
@@ -112,20 +153,18 @@ function showUsers(users) {
         // ponemos los datos del usuario en un li con inputs
         let li = document.createElement('li');
 
+        // ponerle un id al li
+        li.id = user.id;
+
         let inputNombre = document.createElement('input');
         inputNombre.type = 'text';
-        inputNombre.value = user.nombre;
+        inputNombre.value = user.usuario;
         li.appendChild(inputNombre);
 
         let inputEmail = document.createElement('input');
         inputEmail.type = 'email';
-        inputEmail.value = user.email;
+        inputEmail.value = user.correo;
         li.appendChild(inputEmail);
-
-        let inputContra = document.createElement('input');
-        inputContra.type = 'password';
-        inputContra.value = user.contra;
-        li.appendChild(inputContra);
 
         let inputAdmin = document.createElement('input');
         inputAdmin.type = 'checkbox';
@@ -133,7 +172,8 @@ function showUsers(users) {
         li.appendChild(inputAdmin);
 
         let avatar = document.createElement('img');
-        avatar.src = user.avatar;
+        let src = "../" + user.avatar;
+        avatar.src = src;
         avatar.style.width = "50px";
         avatar.style.height = "50px";
         li.appendChild(avatar);
@@ -149,7 +189,7 @@ function showUsers(users) {
         let editButton = document.createElement('button');
         editButton.innerHTML = "Editar";
         editButton.addEventListener('click', () => {
-            editUser(users[i]);
+            editUser(users[i].id);
         });
 
         li.appendChild(editButton);
@@ -171,30 +211,35 @@ function editUser(id) {
     let tx = db.transaction(DB_STORE_NAME, 'readwrite');
     let store = tx.objectStore(DB_STORE_NAME);
 
-    // actualizamos el usuario
-
-    let req = store.put({
-        nombre: nombre.value,
-        email: email.value,
-        contra: contra.value,
-        admin: admin.checked,
-        avatar: avatar.value
-    });
+    // actualizamos el usuario de acuerdo a su id
+    var req = store.get(id);
 
     req.onsuccess = (e) => {
+        let user = e.target.result;
+
+        // obtenemos el li del usuario
+        let li = document.getElementById(id);
+
+        // obtenemos los inputs del usuario
+        let inputs = li.getElementsByTagName('input');
+
+        // actualizamos los datos del usuario
+        user.usuario = inputs[0].value;
+        user.correo = inputs[1].value;
+        user.admin = inputs[2].checked;
+
+        // actualizamos el usuario
+        store.put(user);
+
         console.log("editUser: user updated");
-        console.log(e.target.result);
-    };
+    }
 
     req.onerror = (e) => {
         console.error("editUser: error updating user", e.target.errorCode);
-    };
+    }
 
-    tx.oncomplete = () => {
-        console.log("editUser: tx completed");
-        db.close();
-        opened = false;
-    };
+    // recargar la página
+    location.reload();
 }
 
 // función para borrar un usuario de la base de datos
@@ -219,7 +264,7 @@ function borrarUsuario(id) {
                 // comprobamos si logged está a true
                 if (cursor.value.logged == true && cursor.value.id == id) {
                     // redirigir a la página de inicio
-                    location.href = "main.html";
+                    location.href = "../index.html";
                 }
                 cursor.continue();
             }
@@ -235,6 +280,6 @@ function borrarUsuario(id) {
 }
 
 window.onload = function () {
-    console.log(crypto.randomUUID())
+    saberSiAdmin();
     readData();
 }
