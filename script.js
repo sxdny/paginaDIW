@@ -51,8 +51,8 @@ REGISTRAR_BTN.addEventListener('click', (e) => {
     console.log(usuario.value + " " + correo.value + " " + contra.value + " " + contraConfirmar.value + " " + rutaImagen);
 
     // comprobar si los campos están vacíos
-    if (usuario.value == "" || correo.value == "" || contra.value == "" || contraConfirmar.value == "") {
-        mensaje.innerHTML = "Debes rellenar todos los campos";
+    if (usuario.value == "" || correo.value == "" || contra.value == "" || contraConfirmar.value == "" || rutaImagen == "" || admin.value == "") {
+        document.getElementById("mensaje").innerHTML = "Rellene todos los campos";
         mensaje.style.color = "red";
         return;
     }
@@ -150,8 +150,6 @@ function insertUser(db) {
     var req = store.add(user);
 
     req.onsuccess = (e) => {
-        alert("sendData: User added to the database");
-        alert(user.usuario + " " + user.correo + " " + user.contra + " " + user.avatar + " " + user.admin + " " + user.logged)
         window.location.href = "../index.html";
     };
 
@@ -177,6 +175,9 @@ function getAvatar() {
     } else if (avatar2.checked) {
         return "images/avatar2.jpg";
     } else if (avatar3.checked) {
+        return "images/avatar3.jpg";
+    }
+    else {
         return "images/avatar3.jpg";
     }
 }

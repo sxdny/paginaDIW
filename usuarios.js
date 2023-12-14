@@ -171,6 +171,15 @@ function showUsers(users) {
         inputAdmin.checked = user.admin;
         li.appendChild(inputAdmin);
 
+        let inputPassword = document.createElement('input');
+
+        // desencriptamos la contraseña
+        let contraDesencriptada = CryptoJS.AES.decrypt(user.contra, "contra").toString(CryptoJS.enc.Utf8);
+
+        inputPassword.type = 'password';
+        inputPassword.value = contraDesencriptada;
+        li.appendChild(inputPassword);
+
         let avatar = document.createElement('img');
         let src = "../" + user.avatar;
         avatar.src = src;
@@ -223,10 +232,17 @@ function editUser(id) {
         // obtenemos los inputs del usuario
         let inputs = li.getElementsByTagName('input');
 
+        console.log(inputs);
+
         // actualizamos los datos del usuario
         user.usuario = inputs[0].value;
         user.correo = inputs[1].value;
         user.admin = inputs[2].checked;
+
+        // encriptamos la contraseña
+        let contraEncriptada = CryptoJS.AES.encrypt(inputs[3].value, "contra").toString();
+
+        user.contra = contraEncriptada;
 
         // actualizamos el usuario
         store.put(user);

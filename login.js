@@ -109,15 +109,26 @@ function readData() {
                 }
                 else {
                     cursor.continue();
+
+                    console.log(mensaje);
+
                     // mostramos el mensaje de error
-                    mensaje.innerHTML = "Usuario o contraseña incorrectos";
-                    mensaje.style.color = "red";
+                    mensaje.innerText = "Usuario o contraseña incorrectos";
+                    
                 }
             }
             else {
-                cursor.continue();
                 console.log("readUsers: users readed: " + users.length);
                 console.log(users);
+
+                console.log(mensaje);
+
+                // mostramos el mensaje de error
+                mensaje.innerText = "Usuario o contraseña incorrectos";
+
+                mensaje.style.color = "red";
+
+                cursor.continue();
             }
 
         };

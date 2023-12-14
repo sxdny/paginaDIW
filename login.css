@@ -1,0 +1,144 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Inter", sans-serif;
+}
+
+body.login, body.lista-usuarios {
+    background-color: #fff !important;
+    display: grid;
+    place-content: center;
+    height: 100vh;
+    text-align: center;
+}
+
+li {
+    list-style: none;
+    display: flex;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+/* poner la imagen primero */
+li > img {
+    order: -1;
+}
+
+li > img {
+    width: 5rem;
+    height: 5rem;
+    border-radius: 5rem;
+    border: 1px solid #13293d;
+    box-shadow: none;
+    cursor: default;
+}
+
+
+.lista-usuarios > a {
+    color: #141414;
+    text-decoration: none;
+    font-size: 1.2rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+li > input[type="text"]:focus {
+    border: 2px solid white;
+}
+
+li > button {
+    padding: 0.5rem 1rem;
+    align-self: center;
+    background-color: #ceff1a;
+    color: #13293d;
+    border: 1px solid #13293d;
+    cursor: pointer;
+}
+
+li > button:hover {
+    background-color: #13293d;
+    color: #ceff1a;
+}
+
+body.login, body.lista-usuarios > h1 {
+    font-size: 3rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+
+}
+
+.loginForm > div > input {
+    padding: 0.25rem 0.5rem !important;
+}
+
+.loginForm {
+    text-align: start;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    border-bottom: 0.5px solid white;
+    border-top: 0.5px solid white;
+    width: 100%;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.loginForm > input {
+    margin-top: 1rem;
+    background-color: #ceff1a;
+    color: #141414;
+    border: none;
+    border-radius: 0px;
+    width: 100%;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    border: 1px solid #13293d;
+
+    transition: .5s ease;
+}
+
+.loginForm > input:hover {
+    background-color: #34506b;
+    color: white;
+}
+
+.home-link {
+    color: #141414;
+    text-decoration: none;
+    font-size: 1.2rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.home-link > a {
+    color: #141414;
+    text-decoration: none;
+    font-size: 1.2rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.home-link > a:hover {
+    color: #34506b;
+}
+
+.loginForm > div {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: start;
+    gap: 1rem;
+}
+
+#loginForm > .loginCorreo {
+    color: white;
+    width: 5rem !important;
+    height: 2.5rem !important;
+    padding: 1rem !important;
+    font-size: 1.2rem;
+}

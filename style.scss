@@ -8,7 +8,6 @@
 
 body {
     background-color: #fdfdfd   !important;
-    width: 100%;
     color: $black-color;
 }
 
@@ -366,7 +365,6 @@ footer {
 form {
     display: flex;
     flex-direction: column;
-    gap: 15px;
     text-align: left !important;
 }
 
@@ -459,16 +457,22 @@ p[type="subtitulo"] {
     border-radius: 12px;
 }
 
-/* todos los <input> que tengan como att "type='text'" */
-input[type="text"] {
-    padding: 1.5rem 1rem;
+#loginButton {
+    background-color: #ceff1a;
+    color: #141414;
+    border: none;
+    border-radius: 12px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    border: 1px solid #13293d;
 }
 
 input {
-    border-radius: 0px !important;
-    border: 1px solid #13293d;
     background-color: white;
-    color: black;
+    padding: 0.5rem 0.5rem;
+    border-radius: 0 !important;
+    border: 1px solid #13293d;
+    color: #2e455a;
 }
 
 .btn-blur-bg:focus {
